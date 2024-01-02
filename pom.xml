@@ -28,7 +28,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
  
 <properties>
  
-<java.version>17</java.version>
+<java.version>11</java.version>
  
 </properties>
  
@@ -75,6 +75,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <artifactId>spring-boot-starter-data-jpa</artifactId>
  
 </dependency>
+<dependency>
+         <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+         <version>2.3.0</version>                                                                                                  
+         </dependency>
  
 <!-- H2 Database -->
  
@@ -99,6 +104,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <scope>test</scope>
  
 </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
  
 </dependencies>
  
