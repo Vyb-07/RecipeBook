@@ -38,21 +38,22 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
  
 <dependency>
  
-<groupId>junit</groupId>
+	<groupId>junit</groupId>
  
-<artifactId>junit</artifactId>
- 
-<scope>test</scope>
+	<artifactId>junit</artifactId>
+	 
+	<scope>test</scope>
  
 </dependency>
- 
+
+
 <dependency>
  
-<groupId>org.junit.jupiter</groupId>
- 
-<artifactId>junit-jupiter-api</artifactId>
- 
-<scope>test</scope>
+	<groupId>org.junit.jupiter</groupId>
+	 
+	<artifactId>junit-jupiter-api</artifactId>
+	 
+	<scope>test</scope>
  
 </dependency>
  
@@ -60,9 +61,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
  
 <dependency>
  
-<groupId>org.springframework.boot</groupId>
- 
-<artifactId>spring-boot-starter-web</artifactId>
+	<groupId>org.springframework.boot</groupId>
+	 
+	<artifactId>spring-boot-starter-web</artifactId>
  
 </dependency>
  
@@ -70,26 +71,31 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
  
 <dependency>
  
-<groupId>org.springframework.boot</groupId>
- 
-<artifactId>spring-boot-starter-data-jpa</artifactId>
- 
+	<groupId>org.springframework.boot</groupId>
+	 
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+	 
 </dependency>
+
 <dependency>
+	
          <groupId>org.springdoc</groupId>
+         
          <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-         <version>2.3.0</version>                                                                                                  
-         </dependency>
+         
+         <version>2.3.0</version>       
+                                                                                                    
+</dependency>
  
 <!-- H2 Database -->
  
 <dependency>
  
-<groupId>com.h2database</groupId>
- 
-<artifactId>h2</artifactId>
- 
-<scope>runtime</scope>
+	<groupId>com.h2database</groupId>
+	 
+	<artifactId>h2</artifactId>
+	 
+	<scope>runtime</scope>
  
 </dependency>
  
@@ -97,17 +103,22 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
  
 <dependency>
  
-<groupId>org.springframework.boot</groupId>
- 
-<artifactId>spring-boot-starter-test</artifactId>
- 
-<scope>test</scope>
+	<groupId>org.springframework.boot</groupId>
+	 
+	<artifactId>spring-boot-starter-test</artifactId>
+	 
+	<scope>test</scope>
  
 </dependency>
+
 <dependency>
+	
     <groupId>org.springframework.boot</groupId>
+    
     <artifactId>spring-boot-devtools</artifactId>
+    
     <scope>runtime</scope>
+    
 </dependency>
 
  

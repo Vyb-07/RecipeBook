@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,7 +24,7 @@ import com.example.recipebook.service.RecipeService;
 public class RecipeController {
     private final RecipeService recipeService;
 
-    @Autowired
+   // @Autowired
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
@@ -82,5 +83,16 @@ public class RecipeController {
     public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
         recipeService.deleteRecipe(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> patchPost(@PathVariable long id, @RequestBody Recipe updatedRecipe) {
+        try {
+        	Recipe patchedPost = recipeService.patchmethod(id, updatedRecipe);
+            return new ResponseEntity<>(patchedPost, HttpStatus.OK);
+        } catch (RecipeNotFoundException e) {
+            // Return the exception message in the response body
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
