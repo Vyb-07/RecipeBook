@@ -37,8 +37,10 @@ public class RecipeService {
     }
 
     public Recipe getRecipeById(Long id) {
+    	logger.info("inside getby ID method");
         return recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException("Recipe not found with id: " + id));
+     
     }
 
 
