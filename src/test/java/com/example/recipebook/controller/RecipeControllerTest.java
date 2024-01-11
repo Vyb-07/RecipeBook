@@ -3,7 +3,6 @@ package com.example.recipebook.controller;
 import com.example.recipebook.exception.RecipeNotFoundException;
 import com.example.recipebook.model.Recipe;
 import com.example.recipebook.service.RecipeService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,16 +25,29 @@ public class RecipeControllerTest {
 
     @InjectMocks
     private RecipeController recipeController;
-    
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-    
+
     @Test
     public void testGetAllRecipes() {
         // Arrange
-        List<Recipe> recipes = Arrays.asList(new Recipe(), new Recipe());
+        Recipe recipe1 = new Recipe();
+        recipe1.setId(1L);
+        recipe1.setTitle("Recipe 1");
+        recipe1.setIngredients("Ingredients 1");
+        recipe1.setSteps("Steps 1");
+
+        Recipe recipe2 = new Recipe();
+        recipe2.setId(2L);
+        recipe2.setTitle("Recipe 2");
+        recipe2.setIngredients("Ingredients 2");
+        recipe2.setSteps("Steps 2");
+
+        List<Recipe> recipes = Arrays.asList(recipe1, recipe2);
+
         Mockito.when(recipeService.getAllRecipes()).thenReturn(recipes);
 
         // Act
@@ -45,6 +56,7 @@ public class RecipeControllerTest {
         // Assert
         assertEquals(recipes, result);
     }
+
 
     @Test
     public void testGetRecipeById() {
@@ -153,4 +165,3 @@ public class RecipeControllerTest {
         assertEquals(new ResponseEntity<>("Recipe not found", HttpStatus.NOT_FOUND), result);
     }
 }
-

@@ -3,11 +3,11 @@ package com.example.recipebook.service;
 import com.example.recipebook.exception.RecipeNotFoundException;
 import com.example.recipebook.model.Recipe;
 import com.example.recipebook.repository.RecipeRepository;
-import com.example.recipebook.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class RecipeServiceTest {
 
@@ -25,8 +26,7 @@ public class RecipeServiceTest {
     @InjectMocks
     private RecipeService recipeService;
 
-    @BeforeEach
-    public void setUp() {
+    @BeforeEach    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
@@ -34,7 +34,7 @@ public class RecipeServiceTest {
     public void testGetAllRecipes() {
         // Arrange
         List<Recipe> recipes = new ArrayList<>();
-        when(recipeRepository.findAll()).thenReturn(recipes);
+        Mockito.when(recipeRepository.findAll()).thenReturn(recipes);
 
         // Act
         List<Recipe> result = recipeService.getAllRecipes();
@@ -48,7 +48,7 @@ public class RecipeServiceTest {
         // Arrange
         long recipeId = 1L;
         Recipe recipe = new Recipe();
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(recipe));
+        Mockito.when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(recipe));
 
         // Act
         Recipe result = recipeService.getRecipeById(recipeId);
@@ -61,7 +61,7 @@ public class RecipeServiceTest {
     public void testGetRecipeByIdNotFound() {
         // Arrange
         long recipeId = 1L;
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.empty());
+        Mockito.when(recipeRepository.findById(recipeId)).thenReturn(Optional.empty());
 
         // Act and Assert
         assertThrows(RecipeNotFoundException.class, () -> recipeService.getRecipeById(recipeId));
@@ -71,14 +71,21 @@ public class RecipeServiceTest {
     public void testSaveRecipe() {
         // Arrange
         Recipe recipe = new Recipe();
+        Long id = 1L;
+        recipe.setId(id);
+
+        // Mock the behavior of recipeRepository.save
         when(recipeRepository.save(recipe)).thenReturn(recipe);
 
         // Act
-        Recipe result = recipeService.saveRecipe(recipe);
+        Recipe savedRecipe = recipeService.saveRecipe(recipe);
 
         // Assert
-        assertEquals(recipe, result);
+        assertNotNull(savedRecipe, "Saved recipe should not be null");
+        assertEquals(id, savedRecipe.getId());
+        // Add more assertions based on your specific requirements
     }
+
 
     @Test
     public void testSaveRecipe2Exists() {
@@ -98,8 +105,11 @@ public class RecipeServiceTest {
         when(recipeRepository.existsById(recipe.getId())).thenReturn(false);
 
         // Act and Assert
-        assertThrows(RecipeNotFoundException.class, () -> recipeService.saveRecipe2(recipe));
+        RecipeNotFoundException getexception = assertThrows(RecipeNotFoundException.class, 
+        		() -> { recipeService.saveRecipe2(recipe); });
+        assertEquals("Recipe not  found", getexception.getMessage()); // Updated message here
     }
+
 
     @Test
     public void testDeleteRecipe() {
@@ -119,16 +129,16 @@ public class RecipeServiceTest {
         long recipeId = 1L;
         Recipe existingRecipe = new Recipe();
         Recipe updatedRecipe = new Recipe();
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(existingRecipe));
-        when(recipeRepository.save(existingRecipe)).thenReturn(existingRecipe);
+        Mockito.when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(existingRecipe));
+        Mockito.when(recipeRepository.save(existingRecipe)).thenReturn(existingRecipe);
 
         // Act
         Recipe result = recipeService.patchmethod(recipeId, updatedRecipe);
 
         // Assert
         assertEquals(existingRecipe, result);
-        verify(recipeRepository).findById(recipeId);
-        verify(recipeRepository).save(existingRecipe);
+        Mockito.verify(recipeRepository).findById(recipeId);
+        Mockito.verify(recipeRepository).save(existingRecipe);
     }
 
     @Test
@@ -136,11 +146,11 @@ public class RecipeServiceTest {
         // Arrange
         long recipeId = 1L;
         Recipe updatedRecipe = new Recipe();
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.empty());
+        Mockito.when(recipeRepository.findById(recipeId)).thenReturn(Optional.empty());
 
         // Act and Assert
         assertThrows(RecipeNotFoundException.class, () -> recipeService.patchmethod(recipeId, updatedRecipe));
-        verify(recipeRepository, never()).save(any());
+        Mockito.verify(recipeRepository, Mockito.never()).save(Mockito.any());
     }
 }
 

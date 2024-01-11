@@ -55,7 +55,7 @@ public class RecipeService {
     		return "just updated";
     		}
     	else {
-    		logger.warn("Log-->warning Recipe not found!!!");
+//    		logger.warn("Log-->warning Recipe not found!!!");
     	throw new RecipeNotFoundException("Recipe not  found");
     	}
     }
@@ -148,7 +148,7 @@ public class RecipeService {
             return recipeRepository.save(recipeToUpdate);
         } else {
             logger.error("Log-->Error");
-            throw new RecipeNotFoundException("Post not found with id: " + id, null);
+            throw new RecipeNotFoundException("Recipe not found with id: " + id, null);
         }
     }
 
